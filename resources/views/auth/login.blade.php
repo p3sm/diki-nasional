@@ -9,7 +9,7 @@
                     <img src="svg/modulr.svg" class="mb-5" width="150" alt="Modulr Logo">
                 </div>
                 <h1>{{ __('Login') }}</h1>
-                <p class="text-muted">Sign In to to your account</p>
+                <p class="text-muted">Sign In to to to your account</p>
 
                 @if ($errors->has('active'))
                     <div class="alert alert-danger">
