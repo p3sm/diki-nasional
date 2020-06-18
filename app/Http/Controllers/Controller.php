@@ -26,7 +26,7 @@ class Controller extends BaseController
         $curl = curl_init();
         $header[] = "Content-Type:multipart/form-data";
         curl_setopt_array($curl, array(
-            CURLOPT_URL            => env("LPJK_ENDPOINT") . "AktivasiToken",
+            CURLOPT_URL            => config("app.lpjk_endpoint") . "AktivasiToken",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST  => "POST",
             CURLOPT_POSTFIELDS     => $postData,

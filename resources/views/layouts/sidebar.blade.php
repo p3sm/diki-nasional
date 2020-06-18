@@ -29,6 +29,19 @@
                 </a>
             </li>
           @endif
+          @if(Helpers::checkPermission('verify') )
+            <li class="nav-title">Permohonan Approval 99</li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pengajuan_99/ska">
+                    <i class="nav-icon icon-user"></i> SKA
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pengajuan_99/skt">
+                    <i class="nav-icon icon-user"></i> SKT
+                </a>
+            </li>
+          @endif
 
         @if(Helpers::checkPermission('user') || Helpers::checkPermission('role') )
             <li class="nav-title">Settings</li>
