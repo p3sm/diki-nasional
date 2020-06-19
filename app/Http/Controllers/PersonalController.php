@@ -1599,6 +1599,9 @@ class PersonalController extends Controller
             $new->kualifikasi = $regta->ID_Kualifikasi;
             $new->asosiasi = $regta->ID_Asosiasi_Profesi;
             $new->ustk = $regta->id_unit_sertifikasi;
+            $new->provinsi = $regta->ID_Propinsi_reg;
+            $new->tgl_registrasi = $regta->Tgl_Registrasi;
+            $new->id_permohonan = $regta->id_permohonan;
             $new->created_by = Auth::user()->id;
             $new->updated_by = Auth::user()->id;
 
@@ -1939,6 +1942,9 @@ class PersonalController extends Controller
             $new->kualifikasi = $regta->ID_Kualifikasi;
             $new->asosiasi = $regta->ID_Asosiasi_Profesi;
             $new->ustk = $regta->id_unit_sertifikasi;
+            $new->provinsi = $regta->ID_propinsi_reg;
+            $new->tgl_registrasi = $regta->Tgl_Registrasi;
+            $new->id_permohonan = $regta->id_permohonan;
             $new->created_by = Auth::user()->id;
             $new->updated_by = Auth::user()->id;
 
