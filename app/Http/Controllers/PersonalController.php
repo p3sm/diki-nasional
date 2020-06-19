@@ -82,7 +82,7 @@ class PersonalController extends Controller
         $result = new \stdClass();
         $result->message = $obj->message;
         $result->status = $obj->response;
-        $result->data = $obj->response > 0 ? $obj->result[0] : [];
+        $result->data = isset($obj->result) ? $obj->result[0] : [];
 
         $local = Personal::find($request->id_personal);
 
@@ -95,7 +95,8 @@ class PersonalController extends Controller
             ];
         }
 
-        $this->cloneBiodata($obj->result[0]);
+        if(isset($obj->result))
+            $this->cloneBiodata($obj->result[0]);
 
     	return response()->json($result, $obj->response > 0 ? 200 : 400);
     }
