@@ -1479,7 +1479,7 @@ class PersonalController extends Controller
         $data->id_permohonan = $request->id_permohonan;
         $data->Tgl_Registrasi = $request->tgl_registrasi;
         $data->ID_Propinsi_reg = $user->asosiasi->provinsi_id;
-        $data->status_terbaru = $ta->status_terbaru;
+        $data->status_terbaru = $request->status_terbaru;
         $data->updated_by = Auth::user()->id;
         
         $vva = $request->file("file_berita_acara_vva") ? $request->file_berita_acara_vva->store('vva') : null;
@@ -1832,7 +1832,7 @@ class PersonalController extends Controller
         $data->id_permohonan = $request->id_permohonan;
         $data->Tgl_Registrasi = $request->tgl_registrasi;
         $data->ID_propinsi_reg = $user->asosiasi->provinsi_id;
-        $data->status_terbaru = $ta->status_terbaru;
+        $data->status_terbaru = $request->status_terbaru;
         $data->updated_by = Auth::user()->id;
         
         $vva = $request->file("file_berita_acara_vva") ? $request->file_berita_acara_vva->store('vva') : null;
@@ -1875,7 +1875,7 @@ class PersonalController extends Controller
                 $data->id_permohonan = $tt->id_permohonan;
                 $data->Tgl_Registrasi = $tt->Tgl_Registrasi;
                 $data->ID_propinsi_reg = $tt->ID_propinsi_reg;
-                $data->status_terbaru = $ta->status_terbaru;
+                $data->status_terbaru = $tt->status_terbaru;
                 $data->updated_by = Auth::user()->id;
         
                 $data->save();
