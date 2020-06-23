@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function(){
 
   Route::get('api/users', 'UserController@apiList');
   Route::get('api/user/me', 'UserController@apiMe');
+  Route::get('api/asosiasi', 'AsosiasiController@apiGetList');
   Route::get('api/negara', 'NegaraController@apiGetList');
   Route::get('api/provinsi', 'ProvinsiController@apiGetList');
   Route::get('api/kabupaten/{provinsi_id}', 'KabupatenController@apiGetList');
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('api/subbidang/{bidang_id}', 'SubBidangController@apiGetList');
   Route::get('api/ustk/{provinsi_id}/{bidang}', 'UstkController@apiGetList');
   Route::get('api/pendidikan', 'PendidikanController@apiGetList');
+  Route::get('api/pengajuan99', 'Pengajuan99Controller@apiGetList');
 
   Route::post('api/biodata', 'PersonalController@apiGetBiodata');
   Route::post('api/biodata/create', 'PersonalController@apiCreateBiodata');
@@ -112,8 +114,8 @@ Route::group(['middleware' => 'auth'], function(){
   });
 
 	Route::group(['middleware' => 'authorization:verify'], function () {
-    Route::get('pengajuan_99/ska', 'Pengajuan99Controller@ska');
-    Route::get('pengajuan_99/skt', 'Pengajuan99Controller@skt');
+    Route::get('pengajuan_99/naik', 'Pengajuan99Controller@naik');
+    Route::get('pengajuan_99/delete', 'Pengajuan99Controller@delete');
 
     Route::resources(['document' => 'DocumentController']);
   });

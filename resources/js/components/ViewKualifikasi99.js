@@ -76,30 +76,28 @@ export default class components extends Component {
           <tbody>
             <tr>
               <th>Nama</th>
-              <th>Kualifikasi</th>
-              <th>Sub Bidang</th>
-              <th>Unit Sertifikasi</th>
-              <th>Jenis Permohonan</th>
-              <th>Asosiasi</th>
-              <th>Provinsi</th>
-              <th>Tanggal</th>
+              <th>Nik</th>
+              <th>Sub Klasifikasi</th>
+              <th>Sub Kualifikasi</th>
+              <th>Prov Reg</th>
+              <th>USTK</th>
+              <th>Jns Mohon</th>
               <th>Status Terakhir</th>
-              <th>Dokumen</th>
-              <th>Naik Status 99</th>
+              {/* <th>Dokumen</th> */}
+              {/* <th>Naik Status 99</th> */}
             </tr>
             {this.props.data.map((d, i) => (
               <tr>
-                <td>{d.Nama}</td>
-                <td>{d.ID_Kualifikasi}</td>
+                <td>{d.personal.Nama}</td>
+                <td>{d.ID_Personal}</td>
                 <td>{d.ID_Sub_Bidang}</td>
+                <td>{d.ID_Kualifikasi}</td>
+                <td>{d.ID_Propinsi_reg}</td>
                 <td>{d.id_unit_sertifikasi}</td>
                 <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
-                <td>{d.ID_Asosiasi_Profesi}</td>
-                <td>{this.props.tipe_profesi == 1 ? d.ID_Propinsi_reg : d.ID_propinsi_reg}</td>
-                <td>{d.Tgl_Registrasi}</td>
                 <td>{d.status_terbaru}</td>
-                <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td>
-                <td className="text-center">
+                {/* <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td> */}
+                {/* <td className="text-center">
                   {d.status_terbaru == null && d.diajukan != "1" && !this.state.diajukan[i] && !this.state.submiting[i] && (
                     <Button variant="outline-success" size="sm" onClick={() => this.confirmPengajuan(i, (this.props.tipe_profesi == 1 ? d.ID_Registrasi_TK_Ahli : d.ID_Registrasi_TK_Trampil), d.Tgl_Registrasi, d.ID_Personal)}>Ajukan</Button>
                   )}
@@ -111,7 +109,7 @@ export default class components extends Component {
                         <span class="sr-only">Loading...</span>
                     </div>
                   )}
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

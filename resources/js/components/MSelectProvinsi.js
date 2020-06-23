@@ -44,7 +44,7 @@ export default class MSelectProvinsi extends Component {
 
   render() {
     return (
-      <Form.Group>
+      <Form.Group style={{...this.props.style}} className={this.props.className}>
         <Form.Label>Provinsi</Form.Label>
         <Select isDisabled={this.props.disabled} placeholder="-- pilih provinsi --" value={this.props.value != "" ? this.state.data.filter(obj => {return obj.value == this.props.value})[0] : ""} options={this.state.data} onChange={(val) => this.props.onChange(val)}/>
       </Form.Group>
