@@ -59,7 +59,7 @@ export default class Personal extends Component {
     });
 
     axios
-      .get(`/api/pengajuan99?from=${filter_from}&to=${filter_to}&sertifikat=${filter_sertifikat}&provinsi=${filter_provinsi}&asosiasi=${filter_asosiasi}`)
+      .get(`/api/pengajuan99?from=${filter_from}&to=${filter_to}&sertifikat=${filter_sertifikat ? filter_sertifikat.value : ''}&provinsi=${filter_provinsi}&asosiasi=${filter_asosiasi}`)
       .then(response => {
         let result = response.data;
         console.log(result);
@@ -124,11 +124,12 @@ export default class Personal extends Component {
             <Form.Label>Sertifikat</Form.Label>
             <Select
               placeholder="-- pilih sertifikat --"
+              value={this.state.filter_sertifikat}
               options={[
                 { value: 'SKA', label: 'SKA' },
                 { value: 'SKT', label: 'SKT' },
               ]}
-              onChange={(val) => this.setState({filter_sertifikat: val})} />
+              onChange={(data) => this.setState({filter_sertifikat: data})} />
           </Form.Group>
           <MSelectProvinsi style={{width: 200}} className="mr-1" value={this.state.filter_provinsi} onChange={(data) => this.setState({filter_provinsi: data.value})} />
           <MSelectAsosiasi style={{width: 200}} className="mr-1" value={this.state.filter_asosiasi} onChange={(data) => this.setState({filter_asosiasi: data.value})} />

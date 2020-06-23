@@ -92,7 +92,7 @@ export default class components extends Component {
                 <td>{d.ID_Personal}</td>
                 <td>{d.ID_Sub_Bidang}</td>
                 <td>{d.ID_Kualifikasi}</td>
-                <td>{d.ID_Propinsi_reg}</td>
+                <td>{d.tipe_sertifikat == "SKA" ? d.ID_Propinsi_reg : d.ID_propinsi_reg}</td>
                 <td>{d.id_unit_sertifikasi}</td>
                 <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
                 <td>{d.status_terbaru}</td>
