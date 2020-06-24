@@ -61,12 +61,14 @@ Route::group(['middleware' => 'auth'], function(){
   Route::post('api/kualifikasi_ta/delete', 'PersonalController@apiDeleteKualifikasiTA');
   Route::post('api/kualifikasi_ta/naik_status', 'PersonalController@apiPengajuanNaikStatus');
   Route::post('api/kualifikasi_ta/naik_status_99', 'PersonalController@apiPengajuanNaikStatus99');
+  Route::post('api/kualifikasi_ta/hapus_status_99', 'PersonalController@apiPengajuanHapusStatus99');
   Route::post('api/kualifikasi_tt', 'PersonalController@apiGetKualifikasiTT');
   Route::post('api/kualifikasi_tt_99', 'PersonalController@apiGetKualifikasiTTStatus99');
   Route::post('api/kualifikasi_tt/create', 'PersonalController@apiCreateKualifikasiTT');
   Route::post('api/kualifikasi_tt/delete', 'PersonalController@apiDeleteKualifikasiTT');
   Route::post('api/kualifikasi_tt/naik_status', 'PersonalController@apiPengajuanNaikStatusTT');
   Route::post('api/kualifikasi_tt/naik_status_99', 'PersonalController@apiPengajuanNaikStatusTT99');
+  Route::post('api/kualifikasi_tt/hapus_status_99', 'PersonalController@apiPengajuanHapusStatusTT99');
 
 
   Route::get('api/profile', 'ProfileController@apiGetProfile');

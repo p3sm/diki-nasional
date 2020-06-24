@@ -10,6 +10,7 @@ import MSelectUstk from './MSelectUstk'
 import axios from 'axios'
 import Alert from 'react-s-alert';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import swal from 'sweetalert';
 
 // import { Container } from './styles';
 
@@ -21,7 +22,10 @@ export default class components extends Component {
       showFormAdd: false,
       pengajuan: false,
       submiting: [],
+      submit_approval: false,
+      submit_delete: false,
       diajukan: [],
+      checked: [],
       id_personal: this.props.id_personal,
       id_permohonan: "1",
       tgl_registrasi: moment().format('YYYY-MM-DD'),
@@ -32,49 +36,155 @@ export default class components extends Component {
 
   }
 
+  componentDidMount() {
+    let checked = [];
+    this.props.data.map((d, i) => {
+      checked.push(false);
+    })
+    this.setState({checked: checked})
+  }
+
   kirimPengajuan = () => {
-    var submiting = this.state.submiting
-    var diajukan = this.state.diajukan
-    submiting[this.state.submit_index] = true
+    let checked = this.state.checked;
+    let data = this.props.data;
 
-    this.setState({submiting: submiting, pengajuan: false})
+    this.setState({submit_approval: true, pengajuan: false})
 
-    var formData = new FormData();
-    formData.append("permohonan_id", this.state.submit_id_permohonan);
-    formData.append("tanggal", this.state.submit_tanggal);
-    formData.append("id_personal", this.state.submit_id_personal);
-
-    let uri = this.props.tipe_profesi == 1 ? "/api/kualifikasi_ta/naik_status_99" : "/api/kualifikasi_tt/naik_status_99"
-
-    axios.post(uri, formData).then(response => {
+    Promise.all(
+      checked.map( async (val, i) => {
+        if (val) {
+          var formData = new FormData();
+          formData.append("permohonan_id", data[i].tipe_sertifikat == "SKA" ? data[i].ID_Registrasi_TK_Ahli : data[i].ID_Registrasi_TK_Trampil);
+          formData.append("tanggal", data[i].Tgl_Registrasi);
+          formData.append("id_personal", data[i].ID_Personal);
+      
+          let uri = data[i].tipe_sertifikat == "SKA" ? "/api/kualifikasi_ta/naik_status_99" : "/api/kualifikasi_tt/naik_status_99"
+          
+          return new Promise((resolve, reject) => {
+            axios.post(uri, formData).then(response => {
+              resolve(response);
+            }).catch(err => {
+              reject(err);
+            })
+          })
+        };
+      })
+    ).then(response => {
       console.log(response)
       
-      submiting[this.state.submit_index] = false
-      diajukan[this.state.submit_index] = true
-      this.setState({submiting: submiting, diajukan: diajukan})
-    //   this.props.refreshData()
-
-    //   Alert.success(response.data.message);
-      
+      this.setState({ submit_approval: false })
+      swal({title: "Berhasil mengirim approval", icon: "success"})
     }).catch(err => {
       console.log(err)
-
-      submiting[this.state.submit_index] = false
-      this.setState({submiting: submiting})
-    //   Alert.error(err.response.data.message);
+      
+      this.setState({submit_approval: false})
     })
   }
 
-  confirmPengajuan = (index, id_permohonan, tanggal, id_personal) => {
-    this.setState({pengajuan: true, submit_index: index,  submit_id_permohonan: id_permohonan,  submit_tanggal: tanggal,  submit_id_personal: id_personal})
+  kirimPengajuanHapus = () => {
+    let checked = this.state.checked;
+    let data = this.props.data;
+
+    this.setState({submit_delete: true})
+
+    Promise.all(
+      checked.map((val, i) => {
+        if (val) {
+          var formData = new FormData();
+          formData.append("permohonan_id", data[i].tipe_sertifikat == "SKA" ? data[i].ID_Registrasi_TK_Ahli : data[i].ID_Registrasi_TK_Trampil);
+          formData.append("tanggal", data[i].Tgl_Registrasi);
+          formData.append("id_personal", data[i].ID_Personal);
+      
+          let uri = data[i].tipe_sertifikat == "SKA" ? "/api/kualifikasi_ta/hapus_status_99" : "/api/kualifikasi_tt/hapus_status_99"
+      
+          return new Promise((resolve, reject) => {
+            axios.post(uri, formData).then(response => {
+              resolve(response);
+            }).catch(err => {
+              reject(err);
+            })
+          })
+        };
+      })
+    ).then(response => {
+      console.log(response)
+      
+      this.setState({ submit_delete: false })
+      swal({title: "Berhasil mengajukan hapus", icon: "success"})
+    }).catch(err => {
+      console.log(err)
+      
+      this.setState({submit_delete: false})
+    })
+  }
+
+  confirmPengajuan = () => {
+    let selected = 0;
+    let checked = this.state.checked;
+
+    checked.map((val) => {
+      if (val) selected++;
+    })
+
+    if (selected == 0) {
+      swal({text: 'Pilih data yang akan diajukan', icon: "error"});
+    } else {
+      this.setState({ pengajuan: true });
+    }
+  }
+
+  confirmPenghapusan = () => {
+    let selected = 0;
+    let checked = this.state.checked;
+
+    checked.map((val) => {
+      if (val) selected++;
+    })
+
+    if (selected == 0) {
+      swal({text: 'Pilih data yang akan dihapus', icon: "error"});
+    } else {
+      swal({
+        title: "Hapus Data?",
+        icon: "warning",
+        text: "Anda yakin akan mengajukan permohonan hapus data?",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((confirm) => {
+        if (confirm) {
+          this.kirimPengajuanHapus()
+        }
+      });
+    }
+  }
+
+  onAllCheckboxClick = (e) => {
+    let checked = [];
+    this.props.data.map((d, i) => {
+      checked.push(e.target.checked);
+    })
+    console.log(checked);
+    this.setState({checked: checked})
+  }
+
+  onCheckboxClick = (i, e) => {
+    let checked = this.state.checked;
+    checked[i] = e.target.checked;
+
+    this.setState({ checked: checked });
   }
 
   render() {
     return(
       <div>
+        <button className="btn btn-danger mb-3 float-right" disabled={this.state.submit_delete} style={{height: 40}} onClick={() => this.confirmPenghapusan()}>{this.state.submit_delete ? "Mengirim..." : "Minta Hapus"}</button>
+        <button className="btn btn-primary mb-3 float-right mr-2" disabled={this.state.submit_approval} style={{height: 40}} onClick={() => this.confirmPengajuan()}>{this.state.submit_approval ? "Mengirim..." : "Minta Approval"}</button>
         <Table bordered>
           <tbody>
             <tr>
+              <th>Aksi <br></br><input type="checkbox" onClick={this.onAllCheckboxClick}/></th>
+              <th>No</th>
               <th>Nama</th>
               <th>Nik</th>
               <th>Sub Klasifikasi</th>
@@ -87,7 +197,9 @@ export default class components extends Component {
               {/* <th>Naik Status 99</th> */}
             </tr>
             {this.props.data.map((d, i) => (
-              <tr>
+              <tr key={i}>
+                <td><input type="checkbox" checked={this.state.checked[i]} onClick={(e) => this.onCheckboxClick(i, e)} /></td>
+                <td>{i + 1}</td>
                 <td>{d.personal.Nama}</td>
                 <td>{d.ID_Personal}</td>
                 <td>{d.ID_Sub_Bidang}</td>
@@ -123,7 +235,7 @@ export default class components extends Component {
           btnSize="md"
           confirmBtnBsStyle='success'
           cancelBtnText="Close"
-          confirmBtnText={this.state.deleting ? "Submiting..." : "Ya, Saya yakin"}
+          confirmBtnText={"Ya, Saya yakin"}
           onConfirm={() => this.kirimPengajuan()}
           onCancel={() => this.setState({pengajuan: false})}
         >Saya yakin data terisi dengan sebenar-benarnya</SweetAlert>

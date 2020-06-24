@@ -18,6 +18,7 @@ use App\PersonalRegTT;
 use App\PengajuanNaikStatus;
 use App\PengajuanNaikStatusTT;
 use App\Pengajuan99;
+use App\PengajuanHapus99;
 use Carbon\Carbon;
 
 class PersonalController extends Controller
@@ -1621,6 +1622,44 @@ class PersonalController extends Controller
         return response()->json(null, 204);
     }
 
+    public function apiPengajuanHapusStatus99(Request $request)
+    {
+        $regta = PersonalRegTA::find($request->permohonan_id);
+        $regta->diajukan = 1;
+        $regta->diajukan_by = Auth::user()->id;
+        $regta->diajukan_at = Carbon::now();
+        $regta->save();
+
+        $exist = PengajuanHapus99::where("date", $request->tanggal)
+                                    ->where("id_personal", $request->id_personal)
+                                    ->where("sub_bidang", $regta->ID_Sub_Bidang)
+                                    ->where("asosiasi", $regta->ID_Asosiasi_Profesi)->first();
+        if(!$exist){
+            $new = new PengajuanHapus99();
+            $new->date = $request->tanggal;
+            $new->id_personal = $request->id_personal;
+            $new->nama = $regta->personal->Nama;
+            $new->tipe_sertifikat = "SKA";
+            $new->sub_bidang = $regta->ID_Sub_Bidang;
+            $new->kualifikasi = $regta->ID_Kualifikasi;
+            $new->asosiasi = $regta->ID_Asosiasi_Profesi;
+            $new->ustk = $regta->id_unit_sertifikasi;
+            $new->provinsi = $regta->ID_Propinsi_reg;
+            $new->tgl_registrasi = $regta->Tgl_Registrasi;
+            $new->id_permohonan = $regta->id_permohonan;
+            $new->created_by = Auth::user()->id;
+            $new->updated_by = Auth::user()->id;
+
+            if($new->save()){
+                return response()->json('Input Succeeded', 201);
+            } else {
+                return response()->json('An error has occurred', 400);
+            }
+        }
+
+        return response()->json(null, 204);
+    }
+
     public function apiGetKualifikasiTT(Request $request)
     {
         $key = ApiKey::where('asosiasi_id', Auth::user()->asosiasi->asosiasi_id)->first();
@@ -1945,6 +1984,44 @@ class PersonalController extends Controller
                                         ->where("asosiasi", $regta->ID_Asosiasi_Profesi)->first();
         if(!$exist){
             $new = new Pengajuan99();
+            $new->date = $request->tanggal;
+            $new->id_personal = $request->id_personal;
+            $new->nama = $regta->personal->Nama;
+            $new->tipe_sertifikat = "SKT";
+            $new->sub_bidang = $regta->ID_Sub_Bidang;
+            $new->kualifikasi = $regta->ID_Kualifikasi;
+            $new->asosiasi = $regta->ID_Asosiasi_Profesi;
+            $new->ustk = $regta->id_unit_sertifikasi;
+            $new->provinsi = $regta->ID_propinsi_reg;
+            $new->tgl_registrasi = $regta->Tgl_Registrasi;
+            $new->id_permohonan = $regta->id_permohonan;
+            $new->created_by = Auth::user()->id;
+            $new->updated_by = Auth::user()->id;
+
+            if($new->save()){
+                return response()->json('Input Succeeded', 201);
+            } else {
+                return response()->json('An error has occurred', 400);
+            }
+        }
+
+        return response()->json(null, 204);
+    }
+
+    public function apiPengajuanHapusStatusTT99(Request $request)
+    {
+        $regta = PersonalRegTT::find($request->permohonan_id);
+        $regta->diajukan = 1;
+        $regta->diajukan_by = Auth::user()->id;
+        $regta->diajukan_at = Carbon::now();
+        $regta->save();
+
+        $exist = PengajuanHapus99::where("date", $request->tanggal)
+                                        ->where("id_personal", $request->id_personal)
+                                        ->where("sub_bidang", $regta->ID_Sub_Bidang)
+                                        ->where("asosiasi", $regta->ID_Asosiasi_Profesi)->first();
+        if(!$exist){
+            $new = new PengajuanHapus99();
             $new->date = $request->tanggal;
             $new->id_personal = $request->id_personal;
             $new->nama = $regta->personal->Nama;
