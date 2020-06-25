@@ -1625,9 +1625,9 @@ class PersonalController extends Controller
     public function apiPengajuanHapusStatus99(Request $request)
     {
         $regta = PersonalRegTA::find($request->permohonan_id);
-        $regta->diajukan = 1;
-        $regta->diajukan_by = Auth::user()->id;
-        $regta->diajukan_at = Carbon::now();
+        $regta->diajukan_hapus = 1;
+        $regta->diajukan_hapus_by = Auth::user()->id;
+        $regta->diajukan_hapus_at = Carbon::now();
         $regta->save();
 
         $exist = PengajuanHapus99::where("date", $request->tanggal)
@@ -2011,9 +2011,9 @@ class PersonalController extends Controller
     public function apiPengajuanHapusStatusTT99(Request $request)
     {
         $regta = PersonalRegTT::find($request->permohonan_id);
-        $regta->diajukan = 1;
-        $regta->diajukan_by = Auth::user()->id;
-        $regta->diajukan_at = Carbon::now();
+        $regta->diajukan_hapus = 1;
+        $regta->diajukan_hapus_by = Auth::user()->id;
+        $regta->diajukan_hapus_at = Carbon::now();
         $regta->save();
 
         $exist = PengajuanHapus99::where("date", $request->tanggal)

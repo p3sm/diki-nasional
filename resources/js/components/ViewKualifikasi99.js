@@ -73,6 +73,7 @@ export default class components extends Component {
       console.log(response)
       
       this.setState({ submit_approval: false })
+      this.props.refreshData()
       swal({title: "Berhasil mengirim approval", icon: "success"})
     }).catch(err => {
       console.log(err)
@@ -110,6 +111,7 @@ export default class components extends Component {
       console.log(response)
       
       this.setState({ submit_delete: false })
+      this.props.refreshData()
       swal({title: "Berhasil mengajukan hapus", icon: "success"})
     }).catch(err => {
       console.log(err)
@@ -121,12 +123,30 @@ export default class components extends Component {
   confirmPengajuan = () => {
     let selected = 0;
     let checked = this.state.checked;
+    let data = this.props.data;
+    let fail_status = false;
+    let fail_approval = false;
 
-    checked.map((val) => {
-      if (val) selected++;
+    console.log(checked);
+
+    checked.map((val, i) => {
+      if (val) {
+        selected++;
+
+        if (data[i].status_terbaru !== null) {
+          fail_status = true;
+        }
+        if (data[i].diajukan == 1) {
+          fail_approval = true;
+        }
+      }
     })
 
-    if (selected == 0) {
+    if (fail_status) {
+      swal({text: 'Data sudah naik status tidak bisa diajukan kembali', icon: "error"});
+    } else if (fail_approval) {
+      swal({text: 'Data sudah pernah diajukan', icon: "error"});
+    } else if (selected == 0) {
       swal({text: 'Pilih data yang akan diajukan', icon: "error"});
     } else {
       this.setState({ pengajuan: true });
@@ -136,13 +156,35 @@ export default class components extends Component {
   confirmPenghapusan = () => {
     let selected = 0;
     let checked = this.state.checked;
+    let data = this.props.data;
+    let fail_status = false;
+    let fail_approval = false;
+    let fail_hapus = false;
 
-    checked.map((val) => {
-      if (val) selected++;
+    checked.map((val, i) => {
+      if (val) {
+        selected++;
+
+        if (data[i].status_terbaru === null && data[i].diajukan === null) {
+          fail_status = true;
+        }
+        if (data[i].status_terbaru === null && data[i].diajukan == 1) {
+          fail_approval = true;
+        }
+        if (data[i].diajukan_hapus == 1) {
+          fail_hapus = true;
+        }
+      }
     })
 
-    if (selected == 0) {
-      swal({text: 'Pilih data yang akan dihapus', icon: "error"});
+    if (fail_status) {
+      swal({text: 'Data belum dapat diajukan untuk penghapusan', icon: "error"});
+    } else if (fail_approval) {
+      swal({text: 'Data sedang diajukan naik status', icon: "error"});
+    } else if (fail_hapus) {
+      swal({text: 'Data sudah diajukan untuk penghapusan', icon: "error"});
+    } else if (selected == 0) {
+      swal({text: 'Pilih data yang akan diajukan untuk penghapusan', icon: "error"});
     } else {
       swal({
         title: "Hapus Data?",
@@ -193,6 +235,7 @@ export default class components extends Component {
               <th>USTK</th>
               <th>Jns Mohon</th>
               <th>Status Terakhir</th>
+              <th>Status Permohonan</th>
               {/* <th>Dokumen</th> */}
               {/* <th>Naik Status 99</th> */}
             </tr>
@@ -208,6 +251,7 @@ export default class components extends Component {
                 <td>{d.id_unit_sertifikasi}</td>
                 <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
                 <td>{d.status_terbaru}</td>
+                <td>{d.diajukan_hapus == 1 ? <span class="badge badge-danger">Mohon Hapus</span> : (d.diajukan == 1 && d.status_terbaru == null ? <span class="badge badge-primary">Mohon Approval</span> : '')}</td>
                 {/* <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td> */}
                 {/* <td className="text-center">
                   {d.status_terbaru == null && d.diajukan != "1" && !this.state.diajukan[i] && !this.state.submiting[i] && (

@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('api/ustk/{provinsi_id}/{bidang}', 'UstkController@apiGetList');
   Route::get('api/pendidikan', 'PendidikanController@apiGetList');
   Route::get('api/pengajuan99', 'Pengajuan99Controller@apiGetList');
+  Route::get('api/report', 'ReportController@apiGetList');
 
   Route::post('api/biodata', 'PersonalController@apiGetBiodata');
   Route::post('api/biodata/create', 'PersonalController@apiCreateBiodata');
@@ -120,6 +121,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('pengajuan_99/delete', 'Pengajuan99Controller@delete');
 
     Route::resources(['document' => 'DocumentController']);
+  });
+
+	Route::group(['middleware' => 'authorization:verify'], function () {
+    Route::resources([
+        'report' => 'ReportController',
+    ]);
   });
   
   Route::get('profile', 'ProfileController@index')->name('profile');

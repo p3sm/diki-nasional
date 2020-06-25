@@ -45,9 +45,6 @@ export default class Personal extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      loading: true,
-    });
     this.getKualifikasi();
   }
 
@@ -55,6 +52,7 @@ export default class Personal extends Component {
     const { filter_from, filter_to, filter_sertifikat, filter_provinsi, filter_asosiasi } = this.state;
 
     this.setState({
+      loading: true,
       kualifikasi_ta: [],
     });
 
