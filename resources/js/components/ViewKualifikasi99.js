@@ -221,6 +221,7 @@ export default class components extends Component {
               <th>Aksi <br></br><input type="checkbox" onClick={this.onAllCheckboxClick}/></th>
               <th>No</th>
               <th>Sts Mohon</th>
+              <th>Tgl Mohon</th>
               <th>Jns Mohon</th>
               <th>Tim Prod</th>
               <th>Asosiasi</th>
@@ -232,7 +233,6 @@ export default class components extends Component {
               <th>Sub Klasfks</th>
               <th>Sub Kualfks</th>
               <th>Sts Akhir</th>
-              <th>Tgl Mohon</th>
               {/* <th>Dokumen</th> */}
               {/* <th>Naik Status 99</th> */}
             </tr>
@@ -257,6 +257,7 @@ export default class components extends Component {
                         )
                     )
                 }</td>
+                <td>{d.Tgl_Registrasi}</td>
                 <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
                 <td></td>
                 <td>{d.ID_Asosiasi_Profesi}</td>
@@ -268,7 +269,6 @@ export default class components extends Component {
                 <td>{d.ID_Sub_Bidang}</td>
                 <td>{d.ID_Kualifikasi}</td>
                 <td>{d.status_terbaru}</td>
-                <td>{d.Tgl_Registrasi}</td>
                 {/* <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td> */}
                 {/* <td className="text-center">
                   {d.status_terbaru == null && d.diajukan != "1" && !this.state.diajukan[i] && !this.state.submiting[i] && (
