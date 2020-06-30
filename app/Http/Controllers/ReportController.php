@@ -49,6 +49,12 @@ class ReportController extends Controller
 
       $transaction = $transaction->get();
 
+      foreach($transaction as $value){
+        $value->team;
+        $value->provinsi;
+        $value->kualifikasi;
+      }
+
       return response()->json($transaction, 200);
     }
 }

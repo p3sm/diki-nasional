@@ -59,9 +59,8 @@ export default class Personal extends Component {
     axios
       .get(`/api/pengajuan99?from=${filter_from}&to=${filter_to}&sertifikat=${filter_sertifikat ? filter_sertifikat.value : ''}&provinsi=${filter_provinsi}&asosiasi=${filter_asosiasi}`)
       .then(response => {
+        console.log(response)
         let result = response.data;
-        console.log(result);
-
         this.setState({
           pengajuan: result,
           loading: false,

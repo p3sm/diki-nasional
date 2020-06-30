@@ -70,8 +70,6 @@ export default class components extends Component {
         };
       })
     ).then(response => {
-      console.log(response)
-      
       this.setState({ submit_approval: false })
       this.props.refreshData()
       swal({title: "Berhasil mengirim approval", icon: "success"})
@@ -108,8 +106,6 @@ export default class components extends Component {
         };
       })
     ).then(response => {
-      console.log(response)
-      
       this.setState({ submit_delete: false })
       this.props.refreshData()
       swal({title: "Berhasil mengajukan hapus", icon: "success"})
@@ -126,8 +122,6 @@ export default class components extends Component {
     let data = this.props.data;
     let fail_status = false;
     let fail_approval = false;
-
-    console.log(checked);
 
     checked.map((val, i) => {
       if (val) {
@@ -206,7 +200,6 @@ export default class components extends Component {
     this.props.data.map((d, i) => {
       checked.push(e.target.checked);
     })
-    console.log(checked);
     this.setState({checked: checked})
   }
 
@@ -227,15 +220,19 @@ export default class components extends Component {
             <tr>
               <th>Aksi <br></br><input type="checkbox" onClick={this.onAllCheckboxClick}/></th>
               <th>No</th>
-              <th>Nama</th>
-              <th>Nik</th>
-              <th>Sub Klasifikasi</th>
-              <th>Sub Kualifikasi</th>
-              <th>Prov Reg</th>
-              <th>USTK</th>
+              <th>Sts Mohon</th>
               <th>Jns Mohon</th>
-              <th>Status Terakhir</th>
-              <th>Status Permohonan</th>
+              <th>Tim Prod</th>
+              <th>Asosiasi</th>
+              <th>USTK</th>
+              <th>Prov Reg</th>
+              <th>Nama</th>
+              <th>NIK</th>
+              <th>Prov P</th>
+              <th>Sub Klasfks</th>
+              <th>Sub Kualfks</th>
+              <th>Sts Akhir</th>
+              <th>Tgl Mohon</th>
               {/* <th>Dokumen</th> */}
               {/* <th>Naik Status 99</th> */}
             </tr>
@@ -243,15 +240,35 @@ export default class components extends Component {
               <tr key={i}>
                 <td><input type="checkbox" checked={this.state.checked[i]} onClick={(e) => this.onCheckboxClick(i, e)} /></td>
                 <td>{i + 1}</td>
+                <td>{
+                  d.deleted == 1 ?
+                    <span class="badge badge-danger">Dihapus</span> :
+                    (
+                      d.diajukan_hapus == 1 ?
+                        <span class="badge badge-warning">Minta Hapus</span> :
+                        (
+                          d.diajukan == 1 && d.status_terbaru == null ?
+                            <span class="badge badge-primary">Minta Setuju</span> :
+                            (
+                              d.diajukan == 1 && d.status_terbaru == 99 ?
+                                <span class="badge badge-success">Setuju</span> :
+                                ''
+                            )
+                        )
+                    )
+                }</td>
+                <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
+                <td></td>
+                <td>{d.ID_Asosiasi_Profesi}</td>
+                <td>{d.id_unit_sertifikasi}</td>
+                <td>{d.tipe_sertifikat == "SKA" ? d.ID_Propinsi_reg : d.ID_propinsi_reg}</td>
                 <td>{d.personal.Nama}</td>
                 <td>{d.ID_Personal}</td>
+                <td>{d.personal.provinsi ? d.personal.provinsi.nama_singkat : ''}</td>
                 <td>{d.ID_Sub_Bidang}</td>
                 <td>{d.ID_Kualifikasi}</td>
-                <td>{d.tipe_sertifikat == "SKA" ? d.ID_Propinsi_reg : d.ID_propinsi_reg}</td>
-                <td>{d.id_unit_sertifikasi}</td>
-                <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
                 <td>{d.status_terbaru}</td>
-                <td>{d.diajukan_hapus == 1 ? <span class="badge badge-danger">Mohon Hapus</span> : (d.diajukan == 1 && d.status_terbaru == null ? <span class="badge badge-primary">Mohon Approval</span> : '')}</td>
+                <td>{d.Tgl_Registrasi}</td>
                 {/* <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td> */}
                 {/* <td className="text-center">
                   {d.status_terbaru == null && d.diajukan != "1" && !this.state.diajukan[i] && !this.state.submiting[i] && (

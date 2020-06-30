@@ -18,8 +18,6 @@ export default class MSelectProvinsi extends Component {
 
   componentDidMount(){
     axios.get(`/api/provinsi`).then(response => {
-      console.log(response)
-
       let data = []
 
       response.data.map((d) => {

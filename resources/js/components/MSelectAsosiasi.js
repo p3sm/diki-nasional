@@ -22,8 +22,6 @@ export default class MSelectAsosiasi extends Component {
   getAsosiasi(bidang_id){
     this.setState({data: []})
     axios.get(`/api/asosiasi/`).then(response => {
-      console.log(response)
-
       let data = []
 
       response.data.map((d) => {

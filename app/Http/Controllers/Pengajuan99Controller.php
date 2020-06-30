@@ -55,7 +55,7 @@ class Pengajuan99Controller extends Controller
         $pengajuan = $pengajuan->get();
   
         foreach($pengajuan as $value){
-            $value->personal;
+            $value->personal->provinsi;
             $value->provinsi;
             $value->tipe_sertifikat = 'SKA';
         }
@@ -77,7 +77,7 @@ class Pengajuan99Controller extends Controller
         $pengajuanTT = $pengajuanTT->get();
 
         foreach($pengajuanTT as $value){
-            $value->personal;
+            $value->personal->provinsi;
             $value->provinsi;
             $value->tipe_sertifikat = 'SKT';
         }

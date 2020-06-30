@@ -86,8 +86,8 @@ export default class components extends Component {
               <tr key={i}>
                 <td><input type="checkbox" checked={this.state.checked[i]} onClick={(e) => this.onCheckboxClick(i, e)} /></td>
                 <td>{i + 1}</td>
-                <td>{d.id_propinsi_reg}</td>
-                <td>{d.created_by}</td>
+                <td>{d.provinsi.nama_singkat}</td>
+                <td>{d.team.name}</td>
                 <td>{d.tipe_sertifikat}</td>
                 <td>{d.id_personal}</td>
                 <td>{d.nama}</td>
@@ -95,8 +95,8 @@ export default class components extends Component {
                 <td>{d.id_unit_sertifikasi}</td>
                 <td>{d.tgl_registrasi}</td>
                 <td>{d.created_at}</td>
-                <td>{d.id_kualifikasi}</td>
-                <td>{d.id_permohonan}</td>
+                <td>{d.tipe_sertifikat === 'SKA' ? d.kualifikasi.deskripsi_ahli : d.kualifikasi.deskripsi_trampil}</td>
+                <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
                 <td>{d.dpp_kontribusi}</td>
                 <td>{d.dpp_total}</td>
               </tr>
