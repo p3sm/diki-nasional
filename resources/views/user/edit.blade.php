@@ -48,6 +48,15 @@
 	                <input type="password" class="form-control" name="password" id="password" placeholder="**current password**">
 	              </div>
 	              <div class="form-group">
+                  <label>Tim Produksi</label>
+                  <select class="form-control" name="team_id">
+										<option value="">-- pilih tim produksi --</option>
+                    @foreach ($teams as $team)
+                    <option value="{{$team->id}}" {{$user->team_id == $team->id ? "selected" : ""}}>{{$team->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+	              <div class="form-group">
                   <label>Role</label>
                   <select class="form-control" name="role_id">
                     @foreach ($roles as $role)
@@ -60,7 +69,7 @@
                   <select class="form-control" name="asosiasi_id">
 										<option value="">-- pilih asosiasi --</option>
                     @foreach ($asosiasi as $as)
-                    <option value="{{$as->id_asosiasi}}" {{$user->asosiasi->asosiasi_id == $as->id_asosiasi ? "selected" : ""}}>{{$as->nama}}</option>
+                    <option value="{{$as->id_asosiasi}}" {{$user->asosiasi && $user->asosiasi->asosiasi_id == $as->id_asosiasi ? "selected" : ""}}>{{$as->nama}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -69,7 +78,7 @@
                   <select class="form-control" name="provinsi_id">
 										<option value="">-- pilih provinsi --</option>
                     @foreach ($provinsi as $prov)
-                    <option value="{{$prov->id_provinsi}}" {{$user->asosiasi->provinsi_id == $prov->id_provinsi ? "selected" : ""}}>{{$prov->nama}}</option>
+                    <option value="{{$prov->id_provinsi}}" {{$user->asosiasi && $user->asosiasi->provinsi_id == $prov->id_provinsi ? "selected" : ""}}>{{$prov->nama}}</option>
                     @endforeach
                   </select>
                 </div>

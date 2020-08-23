@@ -42,6 +42,7 @@
                             <th>No.</th>
                             <th>Nama</th>
                             <th>User Name</th>
+                            <th>Tim Produksi</th>
                             <th>Jabatan</th>
                             <th>Asosiasi</th>
                             <th>Provinsi</th>
@@ -59,6 +60,7 @@
                             <td>{{$k + 1}}</td>
                             <td>{{$d->name}}</td>
                             <td>{{$d->username}}</td>
+                            <td>{{$d->team ? $d->team->name : "-"}}</td>
                             <td>{{$d->role->name}}</td>
                             <td>{{$d->asosiasi ? $d->asosiasi->detail->nama : "-"}}</td>
                             <td>{{$d->asosiasi ? $d->asosiasi->provinsi->nama : "-"}}</td>

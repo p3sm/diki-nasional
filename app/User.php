@@ -44,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function team()
+    {
+      return $this->belongsTo('App\Team');
+    }
+    
     public function role()
     {
       return $this->belongsTo('App\Role');

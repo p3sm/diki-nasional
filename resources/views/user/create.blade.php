@@ -45,6 +45,15 @@
 	                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
 	              </div>
 	              <div class="form-group">
+                  <label>Tim Produksi</label>
+                  <select class="form-control" name="team_id">
+										<option value="">-- pilih tim produksi --</option>
+                    @foreach ($teams as $team)
+                    <option value="{{$team->id}}">{{$team->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+	              <div class="form-group">
                   <label>Role</label>
                   <select class="form-control" name="role_id">
                     @foreach ($roles as $role)
