@@ -25,6 +25,7 @@ export default class components extends Component {
       tgl_registrasi: moment().format('YYYY-MM-DD'),
       no_reg_asosiasi: "",
       me: null,
+      accountType: 1,
       delete: false
     }
 
@@ -32,8 +33,30 @@ export default class components extends Component {
 
   componentDidMount(){
     axios.get(`/api/user/me`).then(response => {
-      console.log(response)
-      this.setState({me: response.data})
+      console.log(response.data)
+      let accountType = 1;
+      let asosiasi = "";
+      let provinsi = "";
+
+      if (response.data.tipe_akun == 1) {
+        accountType = 1
+        asosiasi = response.data.asosiasi.detail;
+        provinsi = response.data.asosiasi.provinsi;
+      } else if(response.data.tipe_akun == 2) {
+        accountType = 2
+        asosiasi = response.data.produksi.pjk.badan_usaha.asosiasi;
+        provinsi = response.data.produksi.provinsi;
+      } else if(response.data.tipe_akun == 3) {
+        accountType = 3
+        asosiasi = response.data.marketing.produksi.pjk.badan_usaha.asosiasi;
+        provinsi = response.data.marketing.provinsi;
+      } else {
+        accountType = 1
+        asosiasi = response.data.asosiasi.detail;
+        provinsi = response.data.asosiasi.provinsi;
+      }
+
+      this.setState({me: response.data, accountType: accountType, asosiasi : asosiasi, provinsi: provinsi})
     }).catch(err => {
       console.log(err)
     })
@@ -255,17 +278,17 @@ export default class components extends Component {
                     </Form.Control>
                   </Form.Group>
 
-                  <MSelectUstk value={this.state.id_unit_sertifikasi} onRef={ref => (this.selectUSTK = ref)} provinsi_id={this.state.me ? this.state.me.asosiasi.provinsi_id : 0} onChange={(data) => this.setState({id_unit_sertifikasi: data.value})} />
+                  <MSelectUstk value={this.state.id_unit_sertifikasi} onRef={ref => (this.selectUSTK = ref)} provinsi_id={this.state.me ? this.state.provinsi.id_provinsi : 0} onChange={(data) => this.setState({id_unit_sertifikasi: data.value})} />
                   
                 </Col>
                 <Col md>
                   <Form.Group>
                     <Form.Label>Asosiasi Profesi</Form.Label>
-                    <Form.Control disabled={true} value={this.state.me ? this.state.me.asosiasi.detail.nama : ""}></Form.Control>
+                    <Form.Control disabled={true} value={this.state.me ? this.state.asosiasi.nama : ""}></Form.Control>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Provinsi</Form.Label>
-                    <Form.Control disabled={true} value={this.state.me ? this.state.me.asosiasi.provinsi.nama : ""}></Form.Control>
+                    <Form.Control disabled={true} value={this.state.me ? this.state.provinsi.nama : ""}></Form.Control>
                   </Form.Group>
                   {this.props.tipe_profesi === 1 && (
                     <Form.Group>

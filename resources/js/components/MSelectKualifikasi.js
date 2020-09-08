@@ -13,18 +13,16 @@ export default class MSelectKualifikasi extends Component {
   }
 
   componentDidMount(){
-    axios.get(`/api/kualifikasi`).then(response => {
+    axios.get(`/api/kualifikasi?profesi=` + this.props.tipe_profesi).then(response => {
       console.log(response)
 
       let data = []
 
       response.data.map((d) => {
-        if(this.props.tipe_profesi != 1 || d.id != 1){
-          data.push({
-            value: d.id,
-            label: this.props.tipe_profesi == 1 ? d.deskripsi_ahli : d.deskripsi_trampil
-          })
-        }
+        data.push({
+          value: d.id,
+          label: this.props.tipe_profesi == 1 ? d.deskripsi_ahli : d.deskripsi_trampil
+        })
       })
 
       this.setState({

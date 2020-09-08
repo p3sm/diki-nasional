@@ -120,9 +120,36 @@ class UserController extends Controller
     }
 
     public function apiMe(){
-        $user = User::where("id", Auth::user()->id)->with(["asosiasi" => function ($query) {
-            $query->with('provinsi')->with('detail');
-        }])->first();
+        $user = User::where("id", Auth::user()->id)->with([
+            "asosiasi" => function ($query) {
+                $query->with(['provinsi', 'detail']);
+            }, 
+            "pjk" => function ($query) {
+                $query->with('badanUsaha');
+            }, 
+            "produksi" => function ($query) {
+                $query->with([
+                'pjk' => function ($query) {
+                    $query->with(['badanUsaha' => function ($query) {
+                        $query->with('asosiasi');
+                    }]);
+                },
+                'provinsi',
+                ]);
+            }, 
+            "marketing" => function ($query) {
+                $query->with([
+                'produksi' => function ($query) {
+                    $query->with(['pjk' => function ($query) {
+                        $query->with(['badanUsaha' => function ($query) {
+                            $query->with('asosiasi');
+                        }]);
+                    }]);
+                },
+                'provinsi',
+                ]);
+            }
+        ])->first();
       
     	return response()->json($user, 200);
     }

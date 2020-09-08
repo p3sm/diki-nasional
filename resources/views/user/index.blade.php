@@ -62,8 +62,8 @@
                             <td>{{$d->username}}</td>
                             <td>{{$d->team ? $d->team->name : "-"}}</td>
                             <td>{{$d->role->name}}</td>
-                            <td>{{$d->asosiasi ? $d->asosiasi->detail->nama : "-"}}</td>
-                            <td>{{$d->asosiasi ? $d->asosiasi->provinsi->nama : "-"}}</td>
+                            <td>{{$d->myAsosiasi() ? $d->myAsosiasi()->nama : "-"}}</td>
+                            <td>{{$d->myProvinsi() ? $d->myProvinsi()->nama : "-"}}</td>
                             <td>{{$d->created_at}}</td>
                             <td>
                                 @if($d->profile && $d->profile->file_ktp != "")

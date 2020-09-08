@@ -224,6 +224,7 @@ export default class components extends Component {
               <th>Tgl Mohon</th>
               <th>Jns Mohon</th>
               <th>Tim Prod</th>
+              <th>Tim Mktg</th>
               <th>Asosiasi</th>
               <th>USTK</th>
               <th>Prov Reg</th>
@@ -259,7 +260,8 @@ export default class components extends Component {
                 }</td>
                 <td>{d.Tgl_Registrasi}</td>
                 <td>{d.id_permohonan == 1 ? "Baru" : d.id_permohonan == 2 ? "Perpanjangan" : "Perubahan"}</td>
-                <td></td>
+                <td>{d.user.marketing ? d.user.marketing.produksi.nama : (d.user.produksi ? d.user.produksi.nama : "-")}</td>
+                <td>{d.user.marketing ? d.user.marketing.nama : "-"}</td>
                 <td>{d.ID_Asosiasi_Profesi}</td>
                 <td>{d.id_unit_sertifikasi}</td>
                 <td>{d.tipe_sertifikat == "SKA" ? d.ID_Propinsi_reg : d.ID_propinsi_reg}</td>

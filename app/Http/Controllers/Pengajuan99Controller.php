@@ -52,7 +52,14 @@ class Pengajuan99Controller extends Controller
         
         if($request->asosiasi) $pengajuan->where('ID_Asosiasi_Profesi', $request->asosiasi);
   
-        $pengajuan = $pengajuan->get();
+        $pengajuan = $pengajuan->with(['user' => function ($query) {
+            $query->with([
+                'produksi', 
+                'marketing' => function ($query) {
+                        $query->with(['produksi']);
+                    }
+            ]);
+        }])->get();
   
         foreach($pengajuan as $value){
             $value->personal->provinsi;
@@ -74,7 +81,14 @@ class Pengajuan99Controller extends Controller
         
         if($request->asosiasi) $pengajuanTT->where('ID_Asosiasi_Profesi', $request->asosiasi);
 
-        $pengajuanTT = $pengajuanTT->get();
+        $pengajuanTT = $pengajuanTT->with(['user' => function ($query) {
+            $query->with([
+                'produksi', 
+                'marketing' => function ($query) {
+                        $query->with(['produksi']);
+                    }
+            ]);
+        }])->get();
 
         foreach($pengajuanTT as $value){
             $value->personal->provinsi;
