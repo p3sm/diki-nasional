@@ -65,6 +65,7 @@ class Pengajuan99Controller extends Controller
             $value->personal->provinsi;
             $value->provinsi;
             $value->tipe_sertifikat = 'SKA';
+            $value->doc_url = \Illuminate\Support\Facades\Crypt::encryptString($value->ID_Personal . "." . date('Y-m-d', strtotime($value->Tgl_Registrasi)));
         }
   
         $result = array_merge($pengajuan->toArray(), $result);
@@ -94,6 +95,7 @@ class Pengajuan99Controller extends Controller
             $value->personal->provinsi;
             $value->provinsi;
             $value->tipe_sertifikat = 'SKT';
+            $value->doc_url = \Illuminate\Support\Facades\Crypt::encryptString($value->ID_Personal . "." . date('Y-m-d', strtotime($value->Tgl_Registrasi)));
         }
 
         $result = array_merge($pengajuanTT->toArray(), $result);

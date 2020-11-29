@@ -234,6 +234,7 @@ export default class components extends Component {
               <th>Sub Klasfks</th>
               <th>Sub Kualfks</th>
               <th>Sts Akhir</th>
+              <th>Dokumen</th>
               {/* <th>Dokumen</th> */}
               {/* <th>Naik Status 99</th> */}
             </tr>
@@ -271,6 +272,7 @@ export default class components extends Component {
                 <td>{d.ID_Sub_Bidang}</td>
                 <td>{d.ID_Kualifikasi}</td>
                 <td>{d.status_terbaru}</td>
+                <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi=" + (d.tipe_sertifikat == "SKA" ? "1" : "2") + "&data=" + d.doc_url} href="javascript:;">View</a></td>
                 {/* <td><a className="fancybox" data-fancybox data-type="iframe" data-src={"/document?profesi= " + this.props.tipe_profesi + "&data=" + d.doc_url} href="javascript:;">View</a></td> */}
                 {/* <td className="text-center">
                   {d.status_terbaru == null && d.diajukan != "1" && !this.state.diajukan[i] && !this.state.submiting[i] && (

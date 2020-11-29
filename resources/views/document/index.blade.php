@@ -192,6 +192,13 @@
         <td class="center"></td>
       </tr>
     </table>
+    <div class="ttd-box">
+      <h4>Pemeriksa Kelengkapan</h4>
+      <div class="ttd">
+        <span></span>
+      </div>
+    </div>
+    <div class="clearfix"></div>
   </div>
   
   <div class="doc">
@@ -296,6 +303,33 @@
         @endforeach
       </table>
     </div>
+    <div class="ttd-box nobreak" style="width:250px">
+      <h4>Verifikasi & Validasi</h4>
+      <div class="ttd float" style="border-right:none">
+        <span class="top">Database</span>
+        <span></span>
+      </div>
+      <div class="ttd float">
+        <span class="top">Verifikator</span>
+        <span></span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  
+    <div class="ttd-box nobreak">
+      <h4>Pemeriksa Kelengkapan</h4>
+      <div class="ttd">
+        <span class="top">Sub Div Tenaga Kerja</span>
+      </div>
+    </div>
+  
+    <div class="ttd-box nobreak">
+      <h4>Unit Sertifikasi Tenaga Kerja</h4>
+      <div class="ttd">
+       <span class="top">Catatan</span>
+      </div>
+    </div>
+    <div class="clearfix"></div>
   </div>
   
   <style>
