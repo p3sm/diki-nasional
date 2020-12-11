@@ -303,6 +303,63 @@
       @endforeach
     </table>
   </div>
+  <div class="nobreak">
+    <h2>KLASIFIKASI KUALIFIKASI</h2>
+    <table class="rowdata" cellpadding="0" cellspacing="0">
+      <tr>
+        <th>No</th>
+        <th>ID Personal</th>
+        <th>Nama</th>
+        <th>ID Sub Bidang</th>
+        <th>ID Asosiasi</th>
+        <th>Kualifikasi</th>
+        <th>Permohonan</th>
+      </tr>
+      @foreach($regta as $i => $reg)
+        <tr>
+          <td class="center">{{$i + 1}}</td>
+          <td>{{$reg->ID_Personal}}</td>
+          <td>{{$reg->personal->Nama}}</td>
+          <td>{{$reg->ID_Sub_Bidang}}</td>
+          <td>{{$reg->asosiasi->nama}}</td>
+          <td>
+            @php
+            switch ($reg->ID_Kualifikasi) {
+              case 1:
+                echo "Utama";
+                break;
+              case 2:
+                echo "Madya";
+                break;
+              case 3:
+                echo "Muda";
+                break;
+              default:
+                break;
+            }
+            @endphp
+          </td>
+          <td>
+            @php
+            switch ($reg->id_permohonan) {
+              case 1:
+                echo "Baru";
+                break;
+              case 2:
+                echo "Perpanjangan";
+                break;
+              case 3:
+                echo "Perubahan";
+                break;
+              default:
+                break;
+            }
+            @endphp
+          </td>
+        </tr>
+      @endforeach
+    </table>
+  </div>
 
   <div class="ttd-box nobreak" style="width:250px">
     <h4>Verifikasi & Validasi</h4>
@@ -334,6 +391,7 @@
 <style>
   .doc {
     page-break-after: always;
+    padding-top:5px;
   }
   @media print {
     .landscape {
@@ -398,7 +456,6 @@
   .logo {
     width: 90px;
     float: left;
-    margin-top: -52px;
     margin-right: 20px;
     margin-bottom: 50px;
   }
