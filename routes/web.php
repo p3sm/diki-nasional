@@ -13,6 +13,7 @@
 
 Auth::routes();
 Route::get('pdf', 'PDFController@index');
+Route::resources(['document' => 'DocumentController']);
 
 Route::group(['middleware' => 'auth'], function(){
   Route::get('/clear-cache', function() {
@@ -114,14 +115,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('pengajuan_naik_status/ska', 'PengajuanNaikStatusController@ska');
     Route::get('pengajuan_naik_status/skt', 'PengajuanNaikStatusController@skt');
 
-    Route::resources(['document' => 'DocumentController']);
   });
 
 	Route::group(['middleware' => 'authorization:verify'], function () {
     Route::get('pengajuan_99/naik', 'Pengajuan99Controller@naik');
     Route::get('pengajuan_99/delete', 'Pengajuan99Controller@delete');
 
-    Route::resources(['document' => 'DocumentController']);
   });
 
 	Route::group(['middleware' => 'authorization:verify'], function () {
