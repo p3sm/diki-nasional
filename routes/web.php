@@ -12,6 +12,7 @@
 */
 
 Auth::routes();
+Route::get('pdf', 'PDFController@index');
 
 Route::group(['middleware' => 'auth'], function(){
   Route::get('/clear-cache', function() {
@@ -130,5 +131,4 @@ Route::group(['middleware' => 'auth'], function(){
   });
   
   Route::get('profile', 'ProfileController@index')->name('profile');
-	Route::get('pdf', 'PDFController@index');
 });
