@@ -20,7 +20,7 @@ class PDFController extends Controller
         ));
       }
 
-      $pdf->addPage(env("APP_URL") . $request->src . "?profesi=" . $request->profesi . "&data=" . $request->data);
+      $pdf->addPage("https://diki-dev.mandiritk.com/" . $request->src . "?profesi=" . $request->profesi . "&data=" . $request->data);
       // $pdf->binary = 'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf';
       $pdf->binary = '/usr/local/bin/wkhtmltopdf';
 
