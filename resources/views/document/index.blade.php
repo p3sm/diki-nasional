@@ -335,6 +335,7 @@
   <style>
     .doc {
       page-break-after: always;
+      padding-top:5px;
     }
     @media print {
       .landscape {
@@ -399,7 +400,6 @@
     .logo {
       width: 90px;
       float: left;
-      margin-top: -52px;
       margin-right: 20px;
       margin-bottom: 50px;
     }
