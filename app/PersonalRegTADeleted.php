@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PersonalRegTA extends Model
+class PersonalRegTADeleted extends Model
 {
   protected $table = 'personal_reg_ta_deleted';
 
