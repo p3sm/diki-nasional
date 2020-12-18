@@ -8,8 +8,6 @@ class PersonalRegTADeleted extends Model
 {
   protected $table = 'personal_reg_ta_deleted';
 
-  protected $primaryKey = 'ID_Registrasi_TK_Ahli';
-    
   public function personal()
   {
     return $this->belongsTo('App\Personal', 'ID_Personal');
