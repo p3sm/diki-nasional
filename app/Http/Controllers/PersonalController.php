@@ -1447,6 +1447,7 @@ class PersonalController extends Controller
             $result->status = $obj->response;
 
 			if($obj->response == 1) {
+                $this->deleteLocalRegTA($request, $request->ID_Registrasi_TK_Ahli);
                 return response()->json($result, 200);
             }
             return response()->json($result, 400);
@@ -1505,6 +1506,19 @@ class PersonalController extends Controller
         }
 
         $data->save();
+    }
+
+    public function deleteLocalRegTA(Request $request, $id)
+    {
+        $user = User::find(Auth::user()->id);
+        $data = PersonalRegTA::find($id);
+        
+        if($data){
+            $data->deleted = 1;
+            $data->deleted_by = Auth::user()->id;
+            $data->deleted_at = Carbon::now();
+            $data->save();
+        }
     }
 
     public function cloneRegTA($result)
@@ -1848,6 +1862,7 @@ class PersonalController extends Controller
             $result->status = $obj->response;
 
 			if($obj->response == 1) {
+                $this->deleteLocalRegTT($request, $obj->ID_Registrasi_TK_Trampil);
                 return response()->json($result, 200);
             }
             return response()->json($result, 400);
@@ -1901,6 +1916,19 @@ class PersonalController extends Controller
         }
 
         $data->save();
+    }
+
+    public function deleteLocalRegTT(Request $request, $id)
+    {
+        $user = User::find(Auth::user()->id);
+        $data = PersonalRegTT::find($id);
+        
+        if($data){
+            $data->deleted = 1;
+            $data->deleted_by = Auth::user()->id;
+            $data->deleted_at = Carbon::now();
+            $data->save();
+        }
     }
 
     public function cloneRegTT($result)
