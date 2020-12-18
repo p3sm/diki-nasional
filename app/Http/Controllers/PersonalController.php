@@ -1892,7 +1892,7 @@ class PersonalController extends Controller
             $result->status = $obj->response;
 
 			if($obj->response == 1) {
-                $this->deleteLocalRegTT($request, $obj->ID_Registrasi_TK_Trampil);
+                $this->deleteLocalRegTT($request, $request->ID_Registrasi_TK_Trampil);
                 return response()->json($result, 200);
             }
             return response()->json($result, 400);
@@ -1955,7 +1955,7 @@ class PersonalController extends Controller
 
         if($data){
             $deleted = new PersonalRegTTDeleted();
-            $deleted->ID_Registrasi_TK_Ahli = $id;
+            $deleted->ID_Registrasi_TK_Trampil = $id;
             $deleted->ID_Personal = $data->ID_Personal;
             $deleted->created_by = $data->created_by;
             $deleted->created_at = $data->created_at;
