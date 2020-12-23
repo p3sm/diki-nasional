@@ -111,7 +111,7 @@ Route::group(['middleware' => 'auth'], function(){
     ]);
   });
 
-	Route::group(['middleware' => 'authorization:verify'], function () {
+	Route::group(['middleware' => 'authorization:vva'], function () {
     Route::get('pengajuan_naik_status/ska', 'PengajuanNaikStatusController@ska');
     Route::get('pengajuan_naik_status/skt', 'PengajuanNaikStatusController@skt');
 

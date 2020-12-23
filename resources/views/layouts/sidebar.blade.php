@@ -16,7 +16,7 @@
                   <i class="nav-icon icon-user"></i> Permohonan SKT
               </a>
           </li>
-          @if(Helpers::checkPermission('verify') )
+          @if(Helpers::checkPermission('vva') )
             <li class="nav-title">Kirim VVA</li>
             <li class="nav-item">
                 <a class="nav-link" href="/pengajuan_naik_status/ska">
