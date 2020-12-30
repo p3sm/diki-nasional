@@ -16,7 +16,7 @@
                   <i class="nav-icon icon-user"></i> Permohonan SKT
               </a>
           </li>
-          @if(Helpers::checkPermission('verify') )
+          @if(Helpers::checkPermission('vva') )
             <li class="nav-title">Kirim VVA</li>
             <li class="nav-item">
                 <a class="nav-link" href="/pengajuan_naik_status/ska">
@@ -26,6 +26,22 @@
             <li class="nav-item">
                 <a class="nav-link" href="/pengajuan_naik_status/skt">
                     <i class="nav-icon icon-user"></i> SKT
+                </a>
+            </li>
+          @endif
+          @if(Helpers::checkPermission('verify') )
+            <li class="nav-title">Permohonan 99</li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pengajuan_99/naik">
+                    <i class="nav-icon icon-user"></i> Approval & Hapus 99
+                </a>
+            </li>
+          @endif
+          @if(Helpers::checkPermission('verify') )
+            <li class="nav-title">Laporan</li>
+            <li class="nav-item">
+                <a class="nav-link" href="/report">
+                    <i class="nav-icon icon-user"></i> Laporan SKA & SKT
                 </a>
             </li>
           @endif

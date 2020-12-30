@@ -1,3 +1,5 @@
+import "react-datepicker/dist/react-datepicker.css";
+
 window._ = require('lodash');
 
 /**

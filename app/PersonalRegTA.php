@@ -29,4 +29,14 @@ class PersonalRegTA extends Model
   {
     return $this->belongsTo('App\Kualifikasi', 'ID_Kualifikasi');
   }
+    
+  public function provinsi()
+  {
+    return $this->belongsTo('App\Provinsi', 'ID_Propinsi_reg');
+  }
+    
+  public function user()
+  {
+    return $this->belongsTo('App\User', 'created_by');
+  }
 }

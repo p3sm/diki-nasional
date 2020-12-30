@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -229,4 +229,5 @@ return [
 
     ],
 
+    'lpjk_endpoint' => env('LPJK_ENDPOINT'),
 ];

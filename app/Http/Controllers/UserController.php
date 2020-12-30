@@ -11,6 +11,7 @@ use App\UserAsosiasi;
 use App\Role;
 use App\Asosiasi;
 use App\Provinsi;
+use App\Team;
 
 class UserController extends Controller
 {
@@ -25,6 +26,7 @@ class UserController extends Controller
 
     public function create(){
         $data["roles"] = Role::all()->sortBy("name");
+        $data["teams"] = Team::all()->sortBy("name");
         $data["asosiasi"] = Asosiasi::all()->sortBy("nama");
         $data["provinsi"] = Provinsi::all()->sortBy("nama");
 
@@ -43,6 +45,7 @@ class UserController extends Controller
         $user->username  = $request->get('username');
         $user->password  = Hash::make($request->get('password'));
         $user->name      = $request->get('name');
+        $user->team_id   = $request->get('team_id');
         $user->role_id   = $request->get('role_id');
         $user->is_active = $request->get('is_active') ? 1 : 0;
 
@@ -66,6 +69,7 @@ class UserController extends Controller
     {
         $data["user"] = User::findOrFail($id);
         $data["roles"] = Role::all()->sortBy("name");
+        $data["teams"] = Team::all()->sortBy("name");
         $data["asosiasi"] = Asosiasi::all()->sortBy("nama");
         $data["provinsi"] = Provinsi::all()->sortBy("nama");
 
@@ -82,14 +86,20 @@ class UserController extends Controller
         }
 
         $user->name      = $request->get('name');
+        $user->team_id   = $request->get('team_id');
         $user->role_id   = $request->get('role_id');
         $user->is_active = $request->get('is_active') ? 1 : 0;
 
         if($user->save()){
             $uAsosiasi = UserAsosiasi::where("user_id", $user->id)->first();
+            if(!$uAsosiasi){
+                $uAsosiasi = new UserAsosiasi();
+                $uAsosiasi->user_id = $user->id;
+            }
             $uAsosiasi->asosiasi_id = $request->get('asosiasi_id');
             $uAsosiasi->provinsi_id = $request->get('provinsi_id');
             $uAsosiasi->save();
+            
             return redirect('/users')->with('success', 'User berhasil diupdate');
         }
         return redirect('/users')->with('error', 'User gagal diupdate');
@@ -110,9 +120,36 @@ class UserController extends Controller
     }
 
     public function apiMe(){
-        $user = User::where("id", Auth::user()->id)->with(["asosiasi" => function ($query) {
-            $query->with('provinsi')->with('detail');
-        }])->first();
+        $user = User::where("id", Auth::user()->id)->with([
+            "asosiasi" => function ($query) {
+                $query->with(['provinsi', 'detail']);
+            }, 
+            "pjk" => function ($query) {
+                $query->with('badanUsaha');
+            }, 
+            "produksi" => function ($query) {
+                $query->with([
+                'pjk' => function ($query) {
+                    $query->with(['badanUsaha' => function ($query) {
+                        $query->with('asosiasi');
+                    }]);
+                },
+                'provinsi',
+                ]);
+            }, 
+            "marketing" => function ($query) {
+                $query->with([
+                'produksi' => function ($query) {
+                    $query->with(['pjk' => function ($query) {
+                        $query->with(['badanUsaha' => function ($query) {
+                            $query->with('asosiasi');
+                        }]);
+                    }]);
+                },
+                'provinsi',
+                ]);
+            }
+        ])->first();
       
     	return response()->json($user, 200);
     }

@@ -49,7 +49,7 @@ export default class MSelectBidang extends Component {
 
   render() {
     return (
-      <Form.Group>
+      <Form.Group style={{...this.props.style}}>
         <Form.Label>Sub Bidang</Form.Label>
         <Select placeholder="-- pilih sub bidang --" options={this.state.data} onChange={(val) => this.props.onChange(val)}/>
       </Form.Group>

@@ -45,6 +45,15 @@
 	                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
 	              </div>
 	              <div class="form-group">
+                  <label>Tim Produksi</label>
+                  <select class="form-control" name="team_id">
+										<option value="">-- pilih tim produksi --</option>
+                    @foreach ($teams as $team)
+                    <option value="{{$team->id}}">{{$team->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+	              <div class="form-group">
                   <label>Role</label>
                   <select class="form-control" name="role_id">
                     @foreach ($roles as $role)
@@ -57,7 +66,9 @@
                   <select class="form-control" name="asosiasi_id">
 										<option value="">-- pilih asosiasi --</option>
                     @foreach ($asosiasi as $as)
-                    <option value="{{$as->id_asosiasi}}">{{$as->nama}}</option>
+											@if($as->id_asosiasi == "148" || $as->id_asosiasi == "142")
+												<option value="{{$as->id_asosiasi}}">{{$as->nama}}</option>
+											@endif
                     @endforeach
                   </select>
                 </div>
@@ -66,9 +77,7 @@
                   <select class="form-control" name="provinsi_id">
 										<option value="">-- pilih provinsi --</option>
 										@foreach ($provinsi as $prov)
-											@if($prov->id_provinsi == "04")
-												<option value="{{$prov->id_provinsi}}" {{$prov->id_provinsi == "04" ? "selected" : ""}}>{{$prov->nama}}</option>
-											@endif
+											<option value="{{$prov->id_provinsi}}" {{$prov->id_provinsi == "04" ? "selected" : ""}}>{{$prov->nama}}</option>
                     @endforeach
                   </select>
                 </div>

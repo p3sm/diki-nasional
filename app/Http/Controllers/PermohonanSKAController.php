@@ -25,6 +25,7 @@ class PermohonanSKAController extends Controller
      */
     public function index()
     {
+        // dd(ApiKey::where('asosiasi_id', Auth::user()->myAsosiasi()->id_asosiasi)->first());
         return view('permohonan_ska/index');
     }
 }

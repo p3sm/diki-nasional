@@ -18,4 +18,8 @@ require('./components/PermohonanSka');
 require('./components/PermohonanSkt');
 require('./components/PengajuanNaikStatusSKA');
 require('./components/PengajuanNaikStatusSKT');
+require('./components/Pengajuan99');
+require('./components/Pengajuan99SKA');
+require('./components/Pengajuan99SKT');
 require('./components/Profile');
+require('./components/Laporan');

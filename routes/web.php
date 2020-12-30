@@ -12,6 +12,8 @@
 */
 
 Auth::routes();
+Route::get('pdf', 'PDFController@index');
+Route::resources(['document' => 'DocumentController']);
 
 Route::group(['middleware' => 'auth'], function(){
   Route::get('/clear-cache', function() {
@@ -25,6 +27,7 @@ Route::group(['middleware' => 'auth'], function(){
 
   Route::get('api/users', 'UserController@apiList');
   Route::get('api/user/me', 'UserController@apiMe');
+  Route::get('api/asosiasi', 'AsosiasiController@apiGetList');
   Route::get('api/negara', 'NegaraController@apiGetList');
   Route::get('api/provinsi', 'ProvinsiController@apiGetList');
   Route::get('api/kabupaten/{provinsi_id}', 'KabupatenController@apiGetList');
@@ -33,6 +36,8 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('api/subbidang/{bidang_id}', 'SubBidangController@apiGetList');
   Route::get('api/ustk/{provinsi_id}/{bidang}', 'UstkController@apiGetList');
   Route::get('api/pendidikan', 'PendidikanController@apiGetList');
+  Route::get('api/pengajuan99', 'Pengajuan99Controller@apiGetList');
+  Route::get('api/report', 'ReportController@apiGetList');
 
   Route::post('api/biodata', 'PersonalController@apiGetBiodata');
   Route::post('api/biodata/create', 'PersonalController@apiCreateBiodata');
@@ -58,11 +63,15 @@ Route::group(['middleware' => 'auth'], function(){
   Route::post('api/kualifikasi_ta/create', 'PersonalController@apiCreateKualifikasiTA');
   Route::post('api/kualifikasi_ta/delete', 'PersonalController@apiDeleteKualifikasiTA');
   Route::post('api/kualifikasi_ta/naik_status', 'PersonalController@apiPengajuanNaikStatus');
+  Route::post('api/kualifikasi_ta/naik_status_99', 'PersonalController@apiPengajuanNaikStatus99');
+  Route::post('api/kualifikasi_ta/hapus_status_99', 'PersonalController@apiPengajuanHapusStatus99');
   Route::post('api/kualifikasi_tt', 'PersonalController@apiGetKualifikasiTT');
   Route::post('api/kualifikasi_tt_99', 'PersonalController@apiGetKualifikasiTTStatus99');
   Route::post('api/kualifikasi_tt/create', 'PersonalController@apiCreateKualifikasiTT');
   Route::post('api/kualifikasi_tt/delete', 'PersonalController@apiDeleteKualifikasiTT');
   Route::post('api/kualifikasi_tt/naik_status', 'PersonalController@apiPengajuanNaikStatusTT');
+  Route::post('api/kualifikasi_tt/naik_status_99', 'PersonalController@apiPengajuanNaikStatusTT99');
+  Route::post('api/kualifikasi_tt/hapus_status_99', 'PersonalController@apiPengajuanHapusStatusTT99');
 
 
   Route::get('api/profile', 'ProfileController@apiGetProfile');
@@ -102,11 +111,22 @@ Route::group(['middleware' => 'auth'], function(){
     ]);
   });
 
-	Route::group(['middleware' => 'authorization:verify'], function () {
+	Route::group(['middleware' => 'authorization:vva'], function () {
     Route::get('pengajuan_naik_status/ska', 'PengajuanNaikStatusController@ska');
     Route::get('pengajuan_naik_status/skt', 'PengajuanNaikStatusController@skt');
 
-    Route::resources(['document' => 'DocumentController']);
+  });
+
+	Route::group(['middleware' => 'authorization:verify'], function () {
+    Route::get('pengajuan_99/naik', 'Pengajuan99Controller@naik');
+    Route::get('pengajuan_99/delete', 'Pengajuan99Controller@delete');
+
+  });
+
+	Route::group(['middleware' => 'authorization:verify'], function () {
+    Route::resources([
+        'report' => 'ReportController',
+    ]);
   });
   
   Route::get('profile', 'ProfileController@index')->name('profile');
